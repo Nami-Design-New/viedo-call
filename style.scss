@@ -1,0 +1,103 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  scroll-behavior: smooth;
+  direction: ltr;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 6px;
+  border-radius: 0px !important;
+}
+::-webkit-scrollbar-track {
+  border-radius: 0px !important;
+  background: var(--whiteColor);
+}
+::-webkit-scrollbar-thumb {
+  background-color: #cacaca;
+  outline: none;
+  border-radius: 20px !important;
+}
+body {
+  background: #07070e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .videLive {
+    position: relative;
+    height: 100dvh;
+    width: 100dvw;
+    overflow: hidden;
+    width: min(100%, 600px);
+
+    .bigVideo {
+      height: 100%;
+      background-color: #10101d;
+      display: block;
+      object-fit: cover;
+    }
+    .smallVideo {
+      display: block;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: min(100%, 30vw);
+      max-width: 150px;
+      aspect-ratio: 9/16;
+      background-color: #28283f;
+      border-radius: 20px;
+      object-fit: cover;
+    }
+    .actions {
+      position: absolute;
+      bottom: 20px;
+      right: 50%;
+      transform: translateX(50%);
+      background-color: #ffffff0d;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      border-radius: 100px;
+      padding: 8px 12px;
+      width: min(100%, 300px);
+      backdrop-filter: blur(10px);
+
+      .icon {
+        flex: 1;
+        height: 40px;
+        border-radius: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        cursor: pointer;
+        transition: 0.3s;
+        svg {
+          width: 24px;
+          height: 24px;
+        }
+        &:hover {
+          background-color: #10101d;
+        }
+        &.cancel {
+          background-color: #ff0000;
+        }
+        &.mute::after {
+          content: "";
+          position: absolute;
+          width: 3px;
+          height: 80%;
+          background-color: #cdcdcd;
+          top: 43%;
+          left: 32%;
+          transform: rotate(40deg) translate(-50%, -50%);
+          z-index: 2;
+          border-radius: 100px;
+        }
+      }
+    }
+  }
+}
