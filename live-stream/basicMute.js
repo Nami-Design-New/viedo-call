@@ -22,7 +22,7 @@ var sessionID = "";
 var liveSessionEnded = "";
 var liveSessionEndedTime = "";
 var remoteUsers = {};
-var isUsingFrontCamera = false; // Default to front camera
+var isUsingFrontCamera = true; // Default to front camera
 
 // Agora client options
 var options = {
