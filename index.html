@@ -20,9 +20,7 @@
   <section class="videLive">
     <video class="bigVideo" autoplay muted loop
     src="8408ca9ab745a04fb640b8ba60c446a1_live1-session1_0.mp4"></video>
-  <div class="spaceInner">
     <video class="smallVideo" id="smallVideo" autoplay muted loop ></video>
-  </div>
     <div class="actions">
       <div class="icon video mute">
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="24"
@@ -79,7 +77,7 @@
     let currentDeviceIndex = 0;
     function dragElement(element) {
       var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-      var parentElement = document.querySelector(".spaceInner");
+      var parentElement = document.querySelector(".videLive");
 
       // المسافة من الحواف
       var margin = 10;
@@ -165,29 +163,29 @@
 
  // دالة لتشغيل الكاميرا
  async function startCamera(deviceId = null) {
-      try {
+    try {
         const constraints = {
-          video: {
-            facingMode: deviceId ? { exact: deviceId } : "user"
-          }
+            video: {}
         };
+
+        if (deviceId) {
+            constraints.video.facingMode = { exact: deviceId };
+        }
+
         currentStream = await navigator.mediaDevices.getUserMedia(constraints);
         const smallVideo = document.getElementById("smallVideo");
         smallVideo.srcObject = currentStream; // ربط دفق الكاميرا بعنصر الفيديو
         smallVideo.play(); // تشغيل الفيديو
-      } catch (error) {
-        const constraints = {
-          video: {
-            facingMode:  "user"
-          }
-        };
-        currentStream = await navigator.mediaDevices.getUserMedia(constraints);
-        const smallVideo = document.getElementById("smallVideo");
-        smallVideo.srcObject = currentStream; // ربط دفق الكاميرا بعنصر الفيديو
-        smallVideo.play(); // تشغيل الفيديو
-        console.error("Error accessing the camera:", error);
-      }
+    } catch (error) {
+        if (error.name === 'OverconstrainedError') {
+            console.error("The camera could not be accessed. Please check the device availability.");
+            // حاول بدء الكاميرا بدون قيود
+            await startCamera(); // محاولة تشغيل الكاميرا بدون قيود
+        } else {
+            console.error("Error accessing the camera:", error);
+        }
     }
+}
 
     // دالة لتحديث قائمة الأجهزة
     async function updateDevices() {

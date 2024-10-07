@@ -43,6 +43,7 @@ body .videLive .bigVideo {
   display: block;
   -o-object-fit: cover;
      object-fit: cover;
+  width: 100%;
 }
 body .videLive .spaceInner {
   top: 0;
@@ -63,6 +64,7 @@ body .videLive .smallVideo {
   border-radius: 20px;
   -o-object-fit: cover;
      object-fit: cover;
+  transform: scaleX(-1);
 }
 body .videLive .actions {
   position: absolute;

@@ -42,6 +42,7 @@ body {
       background-color: #10101d;
       display: block;
       object-fit: cover;
+      width: 100%;
     }
 
     .spaceInner {
@@ -63,6 +64,7 @@ body {
       background-color: #28283f;
       border-radius: 20px;
       object-fit: cover;
+    transform: scaleX(-1);
     }
 
     .actions {
