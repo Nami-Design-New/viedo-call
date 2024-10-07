@@ -197,6 +197,7 @@ async function flipCamera() {
         // Toggle the camera (front/back)
         isUsingFrontCamera = !isUsingFrontCamera;
 
+
         // Create a new video track with the selected camera
         localTracks.videoTrack = await AgoraRTC.createCameraVideoTrack({
             facingMode: isUsingFrontCamera ? "user" : "environment"
