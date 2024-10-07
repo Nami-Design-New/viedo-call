@@ -203,7 +203,7 @@ async function flipCamera() {
         });
 
         // Play the new video track locally
-        localTracks.videoTrack.play("local-player");
+        localTracks.videoTrack.play("smallVideo");
 
         // Publish the new video track to the channel
         await client.publish(localTracks.videoTrack);
