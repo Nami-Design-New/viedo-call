@@ -44,6 +44,7 @@ body .videLive .bigVideo {
   -o-object-fit: cover;
      object-fit: cover;
   width: 100%;
+  transform: scaleX(-1);
 }
 body .videLive .smallVideo {
   display: block;
@@ -57,7 +58,6 @@ body .videLive .smallVideo {
   border-radius: 20px;
   -o-object-fit: cover;
      object-fit: cover;
-  transform: scaleX(-1);
   overflow: hidden;
 }
 body .videLive .actions {

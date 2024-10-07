@@ -43,6 +43,7 @@ body {
       display: block;
       object-fit: cover;
       width: 100%;
+      transform: scaleX(-1);
     }
 
 
@@ -57,7 +58,6 @@ body {
       background-color: #28283f;
       border-radius: 20px;
       object-fit: cover;
-    transform: scaleX(-1);
     overflow: hidden;
     }
 
