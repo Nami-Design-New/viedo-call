@@ -45,13 +45,6 @@ body {
       width: 100%;
     }
 
-    .spaceInner {
-      top: 0;
-      width: 100%;
-      height: calc(100dvh - 80px);
-      z-index: 2;
-      position: fixed;
-    }
 
     .smallVideo {
       display: block;
@@ -65,6 +58,7 @@ body {
       border-radius: 20px;
       object-fit: cover;
     transform: scaleX(-1);
+    overflow: hidden;
     }
 
     .actions {

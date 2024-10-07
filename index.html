@@ -14,13 +14,13 @@
   <link rel="icon" type="image/x-icon" href="img/favicon.svg" />
   <!-- Custom style  -->
   <link rel="stylesheet" href="style.css" />
+
 </head>
 
 <body>
   <section class="videLive">
-    <video class="bigVideo" autoplay muted loop
-    src="8408ca9ab745a04fb640b8ba60c446a1_live1-session1_0.mp4"></video>
-    <video class="smallVideo" id="smallVideo" autoplay muted loop ></video>
+    <div class="bigVideo" id="bigVideo"></div>
+    <div class="smallVideo" id="smallVideo" ></div>
     <div class="actions">
       <div class="icon video mute">
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="24"
@@ -70,7 +70,19 @@
         </svg>
       </div>
     </div>
+    <div style="display: none;">
+      <input id="appid" value="ec8110ee8a5c472583776cbde483bff4">
+      <input id="token" value="006ec8110ee8a5c472583776cbde483bff4IAB5R2ldN+yzDx1EFfdEVolWg2Go9tI8vNY0t8rkCT7Lpabt7NXD/PQREAANrVOqp/0EZwEAAQA3ugNn">
+      <input id="channel" value="koko">
+      <input id="uid" value="321311">
+    </div>
+ 
+
   </section>
+  <script src="live-stream/jquery-3.4.1.min.js"></script>
+  <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
+  <script src="live-stream/basicMute.js"></script>
+
   <script>
         let currentStream;
     let videoDevices;
@@ -160,60 +172,6 @@
     // استدعاء وظيفة السحب للفيديو الصغير
     dragElement(document.getElementById("smallVideo"));
 
-
- // دالة لتشغيل الكاميرا
- async function startCamera(deviceId = null) {
-    try {
-        const constraints = {
-            video: {}
-        };
-
-        if (deviceId) {
-            constraints.video.facingMode = { exact: deviceId };
-        }
-
-        currentStream = await navigator.mediaDevices.getUserMedia(constraints);
-        const smallVideo = document.getElementById("smallVideo");
-        smallVideo.srcObject = currentStream; // ربط دفق الكاميرا بعنصر الفيديو
-        smallVideo.play(); // تشغيل الفيديو
-    } catch (error) {
-        if (error.name === 'OverconstrainedError') {
-            console.error("The camera could not be accessed. Please check the device availability.");
-            // حاول بدء الكاميرا بدون قيود
-            await startCamera(); // محاولة تشغيل الكاميرا بدون قيود
-        } else {
-            console.error("Error accessing the camera:", error);
-        }
-    }
-}
-
-    // دالة لتحديث قائمة الأجهزة
-    async function updateDevices() {
-      videoDevices = (await navigator.mediaDevices.enumerateDevices()).filter(device => device.kind === 'videoinput');
-    }
-
-    // دالة لتبديل الكاميرا
-    async function switchCamera() {
-      try{
-        currentDeviceIndex = (currentDeviceIndex + 1) % videoDevices.length;
-      const nextDeviceId = videoDevices[currentDeviceIndex]?.deviceId;
-      if (nextDeviceId) {
-        // إنهاء دفق الكاميرا الحالي
-        currentStream.getTracks().forEach(track => track.stop());
-        await startCamera(nextDeviceId);
-      }
-      }catch{
-
-      }
-    
-    }
-
-    // استدعاء دالة بدء الكاميرا عند تحميل الصفحة
-    window.onload = async () => {
-      await updateDevices(); // تحديث الأجهزة عند تحميل الصفحة
-      await startCamera(); // بدء الكاميرا
-      document.getElementById("switchCamera").onclick = switchCamera; // ربط الزر بوظيفة تبديل الكاميرا
-    };
 
   </script>
 

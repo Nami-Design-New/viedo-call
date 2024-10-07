@@ -1,0 +1,92 @@
+body {
+    overflow: hidden;
+}
+.sso-hidden {
+    display: block;
+}
+.agora_video_player{
+    object-fit: contain !important;
+}
+.banner {
+    padding: 0;
+    background-color: #52575c;
+    color: white;
+}
+
+.banner-text {
+    padding: 8px 20px;
+    margin: 0;
+}
+
+.video-container {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+}
+
+#join-form {
+    margin-top: 10px;
+}
+
+.tips {
+    font-size: 12px;
+    margin-bottom: 2px;
+    color: gray;
+}
+
+.join-info-text {
+    margin-bottom: 2px;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 2px;
+}
+
+.player {
+    width: 100vw;
+    height: 100vh;
+}
+
+.player-name {
+    margin: 0;
+    padding: 0;
+}
+.button-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    position: absolute;
+    bottom: 5vh;
+    right: 50vw;
+    transform: translateX(50%);
+}
+.button-group .btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #fff;
+}
+.button-group .btn-one {
+    background-color: red;
+    border: 1px solid red;
+}
+
+.button-group .btn-two {
+    background-color: #fff;
+}
+.button-group .btn-three {
+    background-color: #fff;
+}
+
+#success-alert,
+#success-alert-with-token,
+#mute-audio,
+#mute-video {
+    display: none;
+}
