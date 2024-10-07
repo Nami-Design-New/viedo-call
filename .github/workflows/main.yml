@@ -1,0 +1,24 @@
+name: 🚀 Deploy website on push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        continue-on-error: true
+        with:
+          server: 91.108.101.102
+          username: u501520601.designforge-ui.com
+          password: V@ekepSX5qM7!#$
+          port: 21
+          server-dir: ${{ github.event.repository.name }}/
