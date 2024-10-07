@@ -145,7 +145,6 @@ async function join() {
             facingMode: 'user'
         })]);
 
-            showMuteButton();
 
             // Play local video track
             localTracks.videoTrack.play("smallVideo");
@@ -266,30 +265,20 @@ function handleUserPublished(user, mediaType) {
     subscribe(user, mediaType);
 }
 
-function hideMuteButton() {
-    $("#mute-video").css("display", "none");
-    $("#mute-audio").css("display", "none");
-}
-
-function showMuteButton() {
-    $("#mute-video").css("display", "inline-block");
-    $("#mute-audio").css("display", "inline-block");
-}
 
 async function muteAudio() {
     if (!localTracks.audioTrack) return;
 
     await localTracks.audioTrack.setMuted(true);
     localTrackState.audioTrackMuted = true;
-    $("#mute-audio").text("Unmute Audio");
+    $("#mute-audio").addClass("mute");
 }
 
 async function muteVideo() {
     if (!localTracks.videoTrack) return;
-
     await localTracks.videoTrack.setMuted(true);
     localTrackState.videoTrackMuted = true;
-    $("#mute-video").text("Unmute Video");
+    $("#mute-video").addClass("mute");
 }
 
 async function unmuteAudio() {
@@ -297,7 +286,7 @@ async function unmuteAudio() {
 
     await localTracks.audioTrack.setMuted(false);
     localTrackState.audioTrackMuted = false;
-    $("#mute-audio").text("Mute Audio");
+    $("#mute-audio").removeClass("mute");
 }
 
 async function unmuteVideo() {
@@ -305,5 +294,5 @@ async function unmuteVideo() {
 
     await localTracks.videoTrack.setMuted(false);
     localTrackState.videoTrackMuted = false;
-    $("#mute-video").text("Mute Video");
+    $("#mute-video").removeClass("mute");
 }
