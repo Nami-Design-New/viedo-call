@@ -18,11 +18,11 @@
 
 <body>
   <section class="videLive">
-    <video class="bigVideo" autoplay>
-      <source src="https://videos.pexels.com/video-files/2099568/2099568-sd_640_360_30fps.mp4" type="video/mp4">
-
-    </video>
-    <video class="smallVideo" autoplay muted  src="https://videos.pexels.com/video-files/856148/856148-sd_640_360_25fps.mp4"></video>
+    <video class="bigVideo" autoplay muted loop
+    src="8408ca9ab745a04fb640b8ba60c446a1_live1-session1_0.mp4"></video>
+  <div class="spaceInner">
+    <video class="smallVideo" id="smallVideo" autoplay muted loop ></video>
+  </div>
     <div class="actions">
       <div class="icon video mute">
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="24"
@@ -49,7 +49,7 @@
           </g>
         </svg>
       </div>
-      <div class="icon rotate">
+      <div class="icon rotate" id="switchCamera">
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="24"
           height="24" x="0" y="0" viewBox="0 0 32 32" style="enable-background:new 0 0 512 512" xml:space="preserve"
           class="">
@@ -73,6 +73,152 @@
       </div>
     </div>
   </section>
+  <script>
+        let currentStream;
+    let videoDevices;
+    let currentDeviceIndex = 0;
+    function dragElement(element) {
+      var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+      var parentElement = document.querySelector(".spaceInner");
+
+      // المسافة من الحواف
+      var margin = 10;
+
+      // إضافة خاصية الانتقال (animation) للحركة السلسة
+      element.style.transition = "left 0.5s ease, top 0.5s ease";
+
+      element.onmousedown = dragMouseDown;
+
+      function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+
+        // إيقاف الحركة المؤقتة أثناء السحب
+        element.style.transition = "";
+      }
+
+      function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+
+        var parentRect = parentElement.getBoundingClientRect();
+        var elementRect = element.getBoundingClientRect();
+
+        // حساب الموضع الجديد
+        var newTop = element.offsetTop - pos2;
+        var newLeft = element.offsetLeft - pos1;
+
+        // تأكد من أن الفيديو لا يخرج عن الحواف العلوية أو السفلية
+        if (newTop < margin) {
+          newTop = margin;
+        } else if (newTop + elementRect.height > parentRect.height - margin) {
+          newTop = parentRect.height - elementRect.height - margin;
+        }
+
+        element.style.top = newTop + "px";
+        element.style.left = newLeft + "px";
+
+      }
+
+      function closeDragElement() {
+        // أوقف السحب
+        document.onmouseup = null;
+        document.onmousemove = null;
+
+        // بعد الإفلات، أعد خاصية الانتقال (animation) للحركة السلسة
+        element.style.transition = "left 0.5s ease, top 0.5s ease";
+
+        // حرك الفيديو تلقائيًا إلى الحافة الأقرب (اليمين أو اليسار فقط)
+        snapToClosestSide();
+      }
+
+      function snapToClosestSide() {
+        var parentRect = parentElement.getBoundingClientRect();
+        var elementRect = element.getBoundingClientRect();
+
+        // حساب المسافات إلى الحافتين اليمين واليسار
+        var distanceLeft = elementRect.left - parentRect.left;
+        var distanceRight = parentRect.right - elementRect.right;
+
+        // مقارنة المسافات وتوجيه الفيديو إلى الحافة الأقرب
+        if (distanceLeft < distanceRight) {
+          // الحافة اليسرى
+          element.style.left = margin + "px";
+        } else {
+          // الحافة اليمنى
+          element.style.left = (parentRect.width - elementRect.width - margin) + "px";
+        }
+      }
+    }
+
+    // استدعاء وظيفة السحب للفيديو الصغير
+    dragElement(document.getElementById("smallVideo"));
+
+
+ // دالة لتشغيل الكاميرا
+ async function startCamera(deviceId = null) {
+      try {
+        const constraints = {
+          video: {
+            facingMode: deviceId ? { exact: deviceId } : "user"
+          }
+        };
+        currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+        const smallVideo = document.getElementById("smallVideo");
+        smallVideo.srcObject = currentStream; // ربط دفق الكاميرا بعنصر الفيديو
+        smallVideo.play(); // تشغيل الفيديو
+      } catch (error) {
+        const constraints = {
+          video: {
+            facingMode:  "user"
+          }
+        };
+        currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+        const smallVideo = document.getElementById("smallVideo");
+        smallVideo.srcObject = currentStream; // ربط دفق الكاميرا بعنصر الفيديو
+        smallVideo.play(); // تشغيل الفيديو
+        console.error("Error accessing the camera:", error);
+      }
+    }
+
+    // دالة لتحديث قائمة الأجهزة
+    async function updateDevices() {
+      videoDevices = (await navigator.mediaDevices.enumerateDevices()).filter(device => device.kind === 'videoinput');
+    }
+
+    // دالة لتبديل الكاميرا
+    async function switchCamera() {
+      try{
+        currentDeviceIndex = (currentDeviceIndex + 1) % videoDevices.length;
+      const nextDeviceId = videoDevices[currentDeviceIndex]?.deviceId;
+      if (nextDeviceId) {
+        // إنهاء دفق الكاميرا الحالي
+        currentStream.getTracks().forEach(track => track.stop());
+        await startCamera(nextDeviceId);
+      }
+      }catch{
+
+      }
+    
+    }
+
+    // استدعاء دالة بدء الكاميرا عند تحميل الصفحة
+    window.onload = async () => {
+      await updateDevices(); // تحديث الأجهزة عند تحميل الصفحة
+      await startCamera(); // بدء الكاميرا
+      document.getElementById("switchCamera").onclick = switchCamera; // ربط الزر بوظيفة تبديل الكاميرا
+    };
+
+  </script>
+
 </body>
 
 </html>

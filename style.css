@@ -44,6 +44,13 @@ body .videLive .bigVideo {
   -o-object-fit: cover;
      object-fit: cover;
 }
+body .videLive .spaceInner {
+  top: 0;
+  width: 100%;
+  height: calc(100dvh - 80px);
+  z-index: 2;
+  position: fixed;
+}
 body .videLive .smallVideo {
   display: block;
   position: absolute;

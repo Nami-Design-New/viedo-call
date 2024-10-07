@@ -6,25 +6,30 @@
   scroll-behavior: smooth;
   direction: ltr;
 }
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 6px;
   border-radius: 0px !important;
 }
+
 ::-webkit-scrollbar-track {
   border-radius: 0px !important;
   background: var(--whiteColor);
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: #cacaca;
   outline: none;
   border-radius: 20px !important;
 }
+
 body {
   background: #07070e;
   display: flex;
   align-items: center;
   justify-content: center;
+
   .videLive {
     position: relative;
     height: 100dvh;
@@ -38,6 +43,15 @@ body {
       display: block;
       object-fit: cover;
     }
+
+    .spaceInner {
+      top: 0;
+      width: 100%;
+      height: calc(100dvh - 80px);
+      z-index: 2;
+      position: fixed;
+    }
+
     .smallVideo {
       display: block;
       position: absolute;
@@ -50,6 +64,7 @@ body {
       border-radius: 20px;
       object-fit: cover;
     }
+
     .actions {
       position: absolute;
       bottom: 20px;
@@ -75,16 +90,20 @@ body {
         position: relative;
         cursor: pointer;
         transition: 0.3s;
+
         svg {
           width: 24px;
           height: 24px;
         }
+
         &:hover {
           background-color: #10101d;
         }
+
         &.cancel {
           background-color: #ff0000;
         }
+
         &.mute::after {
           content: "";
           position: absolute;
