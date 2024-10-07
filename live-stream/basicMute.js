@@ -138,7 +138,7 @@ async function join() {
         [options.uid, localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([client.join(options.appid, options.channel, options.token || null, options.uid || null), AgoraRTC.createMicrophoneAudioTrack({
             encoderConfig: "music_standard"
         }), AgoraRTC.createCameraVideoTrack({
-            facingMode: 'environment'
+            facingMode: 'user'
         })]);
 
             showMuteButton();
