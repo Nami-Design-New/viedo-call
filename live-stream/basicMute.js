@@ -110,16 +110,20 @@ async function endMeeting() {
 $("#mute-audio").click(function (e) {
     if (!localTrackState.audioTrackMuted) {
         muteAudio();
+        $(this).addClass('mute')
     } else {
         unmuteAudio();
+        $(this).removeClass('mute')
     }
 });
 
 $("#mute-video").click(function (e) {
     if (!localTrackState.videoTrackMuted) {
         muteVideo();
+        $(this).addClass('mute')
     } else {
         unmuteVideo();
+        $(this).removeClass('mute')
     }
 });
 
